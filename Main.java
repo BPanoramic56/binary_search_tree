@@ -31,17 +31,18 @@ public class Main {
 //			bt.insert(newValue);
 //		}
 		
-		bt.insert(45);
-		bt.insert(10);
-		bt.insert(90);
-		bt.insert(7);
-		bt.insert(12);
-		bt.insert(50);
+
+		int[] list = {45, 10, 90, 7, 12, 50};
 		
-		System.out.println("------");
+		for (int num: list){
+			bt.insert(num);
+		}
+
 		bt.print();
-		System.out.println("------");
-		bt.delete(12);
+
+		System.out.println("-----------");
+		bt.delete(7);
+
 		bt.print();
 	}
 

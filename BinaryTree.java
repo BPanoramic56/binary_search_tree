@@ -3,11 +3,12 @@ package binaryTree;
 public class BinaryTree {
 
 	Node root;
+	String directions = "";
 	
 	public void insert(int value) {
 		root = insertRecursive(root, value);
 	}
-	
+
 	public Node insertRecursive(Node currentNode, int value) {
 		if (currentNode == null) {
 			return new Node(value);
@@ -27,26 +28,79 @@ public class BinaryTree {
 		if (target == root.value) {
 			return "Root node";
 		}
+
+		directions = "";
+		
 		return searchRecursive(root, target);
 	}
 	
 	public String searchRecursive(Node currentNode, int target) {
-		String directions = "";
 		if (currentNode.value == target) {
 			return directions;
 		}
 		
 		if (currentNode.right != null && currentNode.right.value <= target){
-			return directions += "- R -" + searchRecursive(currentNode.right, target);
+			return directions += "- L -" + searchRecursive(currentNode.right, target);
 		}
 		else if (currentNode.left != null) {
-			return directions += "- L -" + searchRecursive(currentNode.left, target);
+			return directions += "- R -" + searchRecursive(currentNode.left, target);
 		}
 
 		return directions;
 		
 	}
 	
+	public Node delete(int target){
+		return deleteRecursive(root, target);
+	}
+
+	public Node deleteRecursive(Node current, int target){
+		
+		if (current == null){
+			return current;
+		}
+
+		if (current.value > target){
+			current.left = deleteRecursive(current.left, target);
+			return current;
+		}
+
+		else if (current.value < target){
+			current.right = deleteRecursive(current.right, target);
+			return current;
+		}
+		
+		if (current.left == null){
+			Node temp = current.right;
+			return temp;
+		}
+		else if (current.right == null){
+			Node temp = current.left;
+			return temp; 
+		}
+		else{
+			Node parent = current;
+
+			Node child = parent.right;
+			while (child.left != null){
+				parent = child;
+				child = child.left;
+			}
+
+			if (parent != current){
+				parent.left = child.right;
+			}
+			else{
+				parent.right = child.right;
+			}
+
+			current.value = child.value;
+
+			return current;
+		}
+
+	}
+
 	public Node searchNode(Node currentNode, int target)
 	{
 		if (currentNode.value == target) {
@@ -64,30 +118,6 @@ public class BinaryTree {
 		return currentNode;
 		
 	}
-	
-	public Node delete(Node currentNode, int target) {
-		if (currentNode == null) {
-			return currentNode;
-		}
-		
-		else if (currentNode.value > target) {
-			root.right = delete(currentNode.right, target);
-		}
-		
-		else if (currentNode.value < target) {
-			root.left = delete(currentNode.left, target);
-		}
-		
-		else {
-			
-			if (currentNode.left == null && currentNode.right == null) {
-				currentNode = null;
-			}
-			
-			else if (currentNode.left )
-		}
-	}
-	
 	
 	void print() {
 		printTree(root, "");
